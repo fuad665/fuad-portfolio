@@ -1,0 +1,475 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  Pristine Crisp White & Modern Tech Palette (Exactly matching tawfigpm.vercel.app screenshot)
+*/
+:root {
+  --background: 255 255 255;       /* Pure Crisp White #FFFFFF */
+  --surface: 255 255 255;          /* Pure White Card Surface #FFFFFF */
+  --surface-2: 248 249 250;        /* Very Soft Light Gray Surface #F8F9FA */
+  --foreground: 17 17 19;          /* Deep Jet Black Typography #111113 */
+  --foreground-muted: 75 85 99;    /* Clean Dark Gray Slate #4B5563 */
+  --foreground-subtle: 107 114 128;/* Subtle Neutral Gray #6B7280 */
+  --accent: 37 71 208;             /* Vibrant Royal Blue/Indigo #2547D0 */
+  --accent-hover: 28 58 174;        /* Darker Blue Hover #1C3AAE */
+  --accent-fg: 255 255 255;        /* Crisp White on Accent */
+  --border: 229 231 235;           /* Clean Soft Border #E5E7EB */
+  --border-subtle: 243 244 246;    /* Ultra Light Border #F3F4F6 */
+  --violet: 147 51 234;            /* Vibrant Violet/Purple #9333EA */
+  --teal: 13 148 136;              /* Modern Emerald/Teal #0D9488 */
+  --amber: 217 119 6;              /* Warm Gold/Amber #D97706 */
+  --rose: 225 29 72;               /* Radiant Rose/Crimson #E11D48 */
+  --sky: 2 132 199;                /* Sky Blue #0284C7 */
+  color-scheme: light;
+}
+
+.dark {
+  --background: 11 11 13;          /* Deep Midnight #0B0B0D */
+  --surface: 19 19 22;             /* Dark Surface #131316 */
+  --surface-2: 26 26 31;           /* Elevated Dark Surface #1A1A1F */
+  --foreground: 244 244 245;       /* Light Gray Text #F4F4F5 */
+  --foreground-muted: 161 161 170; /* Muted Gray #A1A1AA */
+  --foreground-subtle: 139 139 148;/* Subtle Gray #8B8B94 */
+  --accent: 143 168 255;           /* Electric Indigo Accent #8FA8FF */
+  --accent-hover: 175 193 255;     /* Light Electric Indigo #AFC1FF */
+  --accent-fg: 11 11 13;           /* Dark text on light accent */
+  --border: 38 38 43;              /* Dark Border #26262B */
+  --border-subtle: 28 28 33;       /* Subtle Dark Border #1C1C21 */
+  --violet: 167 139 250;           /* Soft Violet #A78BFA */
+  --teal: 45 212 191;              /* Soft Teal #2DD4BF */
+  --amber: 251 191 36;             /* Soft Amber #FBBF24 */
+  --rose: 251 113 133;             /* Soft Rose #FB7185 */
+  --sky: 56 189 248;               /* Soft Sky #38BDF8 */
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.65;
+}
+
+.container-page {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 72rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.section {
+  scroll-margin-top: 5rem;
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding-top: 6.5rem;
+    padding-bottom: 6.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgb(var(--foreground-subtle));
+}
+
+.eyebrow::before {
+  content: "";
+  height: 2px;
+  width: 1.5rem;
+  background-color: rgb(var(--accent));
+}
+
+.h-display {
+  font-size: 2.35rem;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: rgb(var(--foreground));
+}
+
+@media (min-width: 640px) {
+  .h-display {
+    font-size: 3.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .h-display {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .h-display {
+    font-size: 4.25rem;
+  }
+}
+
+.h-section {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: rgb(var(--foreground));
+}
+
+@media (min-width: 640px) {
+  .h-section {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .h-section {
+    font-size: 2.75rem;
+  }
+}
+
+.lead {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgb(var(--foreground-muted));
+}
+
+@media (min-width: 640px) {
+  .lead {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+.meta {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgb(var(--foreground-subtle));
+}
+
+.btn {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: #111113;
+  color: #ffffff;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  background-color: #26262a;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Gradient Button exactly like the Contact button in the screenshot */
+.btn-gradient {
+  display: inline-flex;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 9999px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-image: linear-gradient(135deg, #3730A3 0%, #4F46E5 50%, #7C3AED 100%);
+  background-size: 200% 100%;
+  background-position: 0;
+  color: #ffffff;
+  box-shadow: 0 4px 16px -2px rgba(79, 70, 229, 0.45);
+  transition: background-position 0.4s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gradient:hover {
+  background-position: 100%;
+  box-shadow: 0 6px 20px -2px rgba(79, 70, 229, 0.55);
+}
+
+.btn-gradient:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-width: 1px;
+  border-color: rgb(var(--border));
+  background-color: #ffffff;
+  color: rgb(var(--foreground));
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover {
+  border-color: #9CA3AF;
+  background-color: #F9FAFB;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--foreground));
+  text-decoration-line: underline;
+  text-decoration-color: rgb(var(--border));
+  text-underline-offset: 6px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.link-arrow:hover {
+  color: rgb(var(--accent));
+  text-decoration-color: rgb(var(--accent));
+}
+
+.card,
+.card-interactive {
+  border-radius: 18px;
+  border-width: 1px;
+  border-color: rgb(var(--border));
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+.card-interactive {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 12px 28px -6px rgba(0, 0, 0, 0.08);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border-width: 1px;
+  border-color: #E5E7EB;
+  background-color: #ffffff;
+  color: #374151;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.chip-accent {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  background-color: #EEF2FF;
+  color: #4F46E5;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Green status indicator with subtle ping animation */
+.status-dot {
+  position: relative;
+  display: inline-flex;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 9999px;
+  background-color: #16A34A;
+}
+
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: #16A34A;
+  opacity: 0.5;
+  animation: ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  color: #6B7280;
+  transition: all 0.15s ease;
+}
+
+.tab:hover {
+  color: #111827;
+}
+
+.tab-active {
+  border-color: #E5E7EB;
+  background-color: #ffffff;
+  color: #111827;
+  font-weight: 600;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Very subtle dot grid like the screenshot */
+.bg-dot-grid {
+  background-image: radial-gradient(#D1D5DB 1.1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Headline gradient like 'pay for themselves' in the screenshot: vibrant purple-magenta to indigo */
+.text-gradient {
+  background-image: linear-gradient(90deg, #9333EA 0%, #A855F7 35%, #3B82F6 75%, #2563EB 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 8s linear infinite;
+}
+
+/* Soft ambient auroras matching the screenshot's soft light blue on the left and soft lavender on the right */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.18;
+  pointer-events: none;
+  animation: auroraDrift 18s ease-in-out infinite alternate;
+}
+
+.dark .aurora {
+  opacity: 0.15;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes auroraDrift {
+  0% {
+    transform: translateZ(0) scale(1);
+  }
+  50% {
+    transform: translate3d(35px, -25px, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-25px, 15px, 0) scale(0.96);
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Custom Range Input */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 9999px;
+  background: #E5E7EB;
+  cursor: pointer;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4F46E5;
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px rgba(79, 70, 229, 0.25);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px rgba(79, 70, 229, 0.35);
+  transform: scale(1.1);
+}
