@@ -6,21 +6,21 @@
   Pristine Crisp White & Modern Tech Palette
 */
 :root {
-  --background: 255 255 255;       /* Pure Crisp White #FFFFFF */
+  --background: 250 250 249;       /* Stone-50 Off-white #FAFAF9 */
   --surface: 255 255 255;          /* Pure White Card Surface #FFFFFF */
-  --surface-2: 248 249 250;        /* Very Soft Light Gray Surface #F8F9FA */
+  --surface-2: 244 244 242;        /* Soft Off-white Surface #F4F4F2 */
   --foreground: 17 17 19;          /* Deep Jet Black Typography #111113 */
-  --foreground-muted: 75 85 99;    /* Clean Dark Gray Slate #4B5563 */
-  --foreground-subtle: 107 114 128;/* Subtle Neutral Gray #6B7280 */
+  --foreground-muted: 82 82 91;    /* Muted Slate #52525B */
+  --foreground-subtle: 113 113 122;/* Neutral Gray #71717A */
   --accent: 37 71 208;             /* Vibrant Royal Blue/Indigo #2547D0 */
   --accent-hover: 28 58 174;        /* Darker Blue Hover #1C3AAE */
   --accent-fg: 255 255 255;        /* Crisp White on Accent */
-  --border: 229 231 235;           /* Clean Soft Border #E5E7EB */
-  --border-subtle: 243 244 246;    /* Ultra Light Border #F3F4F6 */
-  --violet: 147 51 234;            /* Vibrant Violet/Purple #9333EA */
-  --teal: 13 148 136;              /* Modern Emerald/Teal #0D9488 */
-  --amber: 217 119 6;              /* Warm Gold/Amber #D97706 */
-  --rose: 225 29 72;               /* Radiant Rose/Crimson #E11D48 */
+  --border: 231 229 228;           /* Clean Soft Border #E7E5E4 */
+  --border-subtle: 240 239 237;    /* Ultra Light Border #F0EFED */
+  --violet: 124 58 237;            /* Royal Violet #7C3AED */
+  --teal: 13 148 136;              /* Teal/Emerald #0D9488 */
+  --amber: 217 119 6;              /* Warm Amber #D97706 */
+  --rose: 225 29 72;               /* Radiant Rose #E11D48 */
   --sky: 2 132 199;                /* Sky Blue #0284C7 */
   color-scheme: light;
 }
@@ -388,34 +388,34 @@ body {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* Very subtle dot grid like the screenshot */
+/* Exact dot grid from reference */
 .bg-dot-grid {
-  background-image: radial-gradient(#D1D5DB 1.1px, transparent 0);
-  background-size: 24px 24px;
+  background-image: radial-gradient(rgb(var(--foreground) / 0.07) 1px, transparent 0);
+  background-size: 22px 22px;
 }
 
-/* Headline gradient like 'pay for themselves' in the screenshot: vibrant purple-magenta to indigo */
+/* Exact text gradient from reference */
 .text-gradient {
-  background-image: linear-gradient(90deg, #9333EA 0%, #A855F7 35%, #3B82F6 75%, #2563EB 100%);
-  background-size: 200% 100%;
+  background-image: linear-gradient(90deg, rgb(var(--accent)), rgb(var(--violet)), rgb(var(--rose)), rgb(var(--accent)));
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: gradientShift 8s linear infinite;
+  animation: gradientShift 10s linear infinite;
 }
 
-/* Soft ambient auroras matching the screenshot's soft light blue on the left and soft lavender on the right */
+/* Exact ambient auroras from reference */
 .aurora {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(90px);
-  opacity: 0.18;
+  filter: blur(80px);
+  opacity: 0.35;
   pointer-events: none;
   animation: auroraDrift 18s ease-in-out infinite alternate;
 }
 
 .dark .aurora {
-  opacity: 0.15;
+  opacity: 0.25;
 }
 
 @keyframes gradientShift {
@@ -423,7 +423,7 @@ body {
     background-position: 0 50%;
   }
   100% {
-    background-position: 200% 50%;
+    background-position: 300% 50%;
   }
 }
 
@@ -432,10 +432,10 @@ body {
     transform: translateZ(0) scale(1);
   }
   50% {
-    transform: translate3d(35px, -25px, 0) scale(1.06);
+    transform: translate3d(40px, -30px, 0) scale(1.08);
   }
   100% {
-    transform: translate3d(-25px, 15px, 0) scale(0.96);
+    transform: translate3d(-30px, 20px, 0) scale(0.94);
   }
 }
 

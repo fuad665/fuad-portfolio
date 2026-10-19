@@ -3,13 +3,13 @@ import {
   Award as AwardIcon,
   GraduationCap,
   Medal,
-  ShieldAlert,
   Users,
   CheckCircle2,
   ArrowUpRight,
   Maximize2,
   X,
-  ExternalLink,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { AWARDS, CERTIFICATIONS } from '../data/portfolioData';
 import { Award } from '../types/portfolio';
@@ -18,11 +18,14 @@ import { EditableImage } from './EditableImage';
 export const AwardsSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'academic' | 'leadership' | 'programmes'>('all');
   const [selectedAward, setSelectedAward] = useState<Award | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   const filteredAwards = AWARDS.filter((award) => {
     if (activeTab === 'all') return true;
     return award.category === activeTab;
   });
+
+  const displayedAwards = showAll ? filteredAwards : filteredAwards.slice(0, 6);
 
   const getAwardIcon = (award: Award) => {
     switch (award.category) {
@@ -37,60 +40,35 @@ export const AwardsSection: React.FC = () => {
     }
   };
 
-  const getColorClasses = (color: Award['color']) => {
+  const getBadgeColor = (color: Award['color']) => {
     switch (color) {
       case 'rose':
-        return {
-          bar: 'bg-rose',
-          text: 'text-rose',
-          glow: 'hover:shadow-[0_16px_40px_-16px_rgba(225,29,72,0.4)]',
-          badgeBg: 'bg-rose/10 text-rose',
-        };
+        return 'text-rose';
       case 'amber':
-        return {
-          bar: 'bg-amber',
-          text: 'text-amber',
-          glow: 'hover:shadow-[0_16px_40px_-16px_rgba(217,119,6,0.4)]',
-          badgeBg: 'bg-amber/10 text-amber',
-        };
+        return 'text-amber';
       case 'violet':
-        return {
-          bar: 'bg-violet',
-          text: 'text-violet',
-          glow: 'hover:shadow-[0_16px_40px_-16px_rgba(124,58,237,0.4)]',
-          badgeBg: 'bg-violet/10 text-violet',
-        };
+        return 'text-violet';
       case 'teal':
-        return {
-          bar: 'bg-teal',
-          text: 'text-teal',
-          glow: 'hover:shadow-[0_16px_40px_-16px_rgba(13,148,136,0.4)]',
-          badgeBg: 'bg-teal/10 text-teal',
-        };
+        return 'text-teal';
       default:
-        return {
-          bar: 'bg-accent',
-          text: 'text-accent',
-          glow: 'hover:shadow-[0_16px_40px_-16px_rgba(37,71,208,0.4)]',
-          badgeBg: 'bg-accent/10 text-accent',
-        };
+        return 'text-accent';
     }
   };
 
   return (
-    <section id="highlights" aria-labelledby="highlights-title" className="scroll-mt-20 border-y border-border bg-background">
-      <div className="container-page py-14 sm:py-20">
+    <section id="certifications" className="section border-t border-border bg-surface">
+      <div className="container-page">
         {/* Header */}
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
-          <div>
+        <div className="mb-10 flex flex-col gap-5 sm:mb-14 md:flex-row md:items-end md:justify-between lg:mb-16">
+          <div className="max-w-2xl">
             <p className="eyebrow">Recognition</p>
-            <h2 id="highlights-title" className="mt-3 font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Awards &amp; certifications
+            <h2 className="h-section mt-3 sm:mt-4">
+              Honors &amp; certifications
             </h2>
+            <p className="lead mt-3 sm:mt-4">
+              Academic awards, competition results and leadership recognition. Every certificate is shown in full, so you can check it.
+            </p>
           </div>
-          <span className="text-sm font-medium text-muted">
-            {AWARDS.length} Honors &bull; {CERTIFICATIONS.length} Certifications
-          </span>
         </div>
 
         {/* Filter Tabs */}
@@ -101,21 +79,21 @@ export const AwardsSection: React.FC = () => {
               role="tab"
               aria-selected={activeTab === 'all'}
               onClick={() => setActiveTab('all')}
-              className={`tab ${activeTab === 'all' ? 'tab-active' : ''}`}
+              className={`tab cursor-pointer ${activeTab === 'all' ? 'tab-active' : ''}`}
             >
               All
-              <span className="text-xs text-subtle ml-1">({AWARDS.length})</span>
+              <span className="text-xs text-subtle">{AWARDS.length}</span>
             </button>
             <button
               type="button"
               role="tab"
               aria-selected={activeTab === 'academic'}
               onClick={() => setActiveTab('academic')}
-              className={`tab ${activeTab === 'academic' ? 'tab-active' : ''}`}
+              className={`tab cursor-pointer ${activeTab === 'academic' ? 'tab-active' : ''}`}
             >
               Academic
-              <span className="text-xs text-subtle ml-1">
-                ({AWARDS.filter((a) => a.category === 'academic').length})
+              <span className="text-xs text-subtle">
+                {AWARDS.filter((a) => a.category === 'academic').length}
               </span>
             </button>
             <button
@@ -123,11 +101,11 @@ export const AwardsSection: React.FC = () => {
               role="tab"
               aria-selected={activeTab === 'leadership'}
               onClick={() => setActiveTab('leadership')}
-              className={`tab ${activeTab === 'leadership' ? 'tab-active' : ''}`}
+              className={`tab cursor-pointer ${activeTab === 'leadership' ? 'tab-active' : ''}`}
             >
               Leadership
-              <span className="text-xs text-subtle ml-1">
-                ({AWARDS.filter((a) => a.category === 'leadership').length})
+              <span className="text-xs text-subtle">
+                {AWARDS.filter((a) => a.category === 'leadership').length}
               </span>
             </button>
             <button
@@ -135,104 +113,94 @@ export const AwardsSection: React.FC = () => {
               role="tab"
               aria-selected={activeTab === 'programmes'}
               onClick={() => setActiveTab('programmes')}
-              className={`tab ${activeTab === 'programmes' ? 'tab-active' : ''}`}
+              className={`tab cursor-pointer ${activeTab === 'programmes' ? 'tab-active' : ''}`}
             >
               Programmes
-              <span className="text-xs text-subtle ml-1">
-                ({AWARDS.filter((a) => a.category === 'programmes').length})
+              <span className="text-xs text-subtle">
+                {AWARDS.filter((a) => a.category === 'programmes').length}
               </span>
             </button>
           </div>
         </div>
 
-        {/* Awards Cards Grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-5">
-          {filteredAwards.map((award) => {
-            const colors = getColorClasses(award.color);
+        {/* Honors Grid */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+          {displayedAwards.map((award) => {
+            const badgeColorClass = getBadgeColor(award.color);
             return (
-              <div
+              <button
+                type="button"
                 key={award.id}
-                className={`card-interactive group relative flex h-full flex-col overflow-hidden text-left ${colors.glow}`}
+                onClick={() => setSelectedAward(award)}
+                className="card-interactive group flex flex-col overflow-hidden text-left cursor-pointer"
               >
-                {/* Colored Top Accent Bar */}
-                <span aria-hidden="true" className={`absolute inset-x-0 top-0 z-10 h-1 ${colors.bar}`} />
-
-                {/* Preview Graphic Area with Image Upload */}
-                <div className="relative bg-surface-2 p-3 sm:p-4 flex items-center justify-center">
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg bg-surface border border-gray-200 shadow-sm">
+                <div className="relative w-full bg-surface-2 p-2.5 sm:p-4">
+                  <div className="relative aspect-[16/11] w-full overflow-hidden rounded-lg bg-white shadow-card">
                     <EditableImage
                       storageKey={`award_cert_${award.id}`}
                       alt={award.title}
                       className="h-full w-full"
+                      imgClassName="h-full w-full object-contain p-1.5"
                       uploadPrompt="Upload Certificate"
-                      objectFit="contain"
+                      showBadgeOnlyOnHover={true}
                       fallbackContent={
-                        <div
-                          className="flex h-full w-full flex-col items-center justify-center p-4 text-center cursor-pointer transition-transform hover:scale-[1.02]"
-                          onClick={() => setSelectedAward(award)}
-                        >
-                          <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${colors.badgeBg} mb-2 shadow-sm`}>
-                            {getAwardIcon(award)}
-                          </div>
-                          <span className="font-heading text-xs font-semibold text-gray-900 line-clamp-1">
-                            {award.organization}
-                          </span>
-                          <span className="font-mono text-[10px] text-gray-500">
-                            {award.date}
+                        <div className="h-full w-full flex flex-col items-center justify-center p-3 text-center bg-surface-2/40">
+                          {getAwardIcon(award)}
+                          <span className="mt-2 text-xs font-semibold text-foreground line-clamp-1">
+                            {award.title}
                           </span>
                         </div>
                       }
                     />
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setSelectedAward(award)}
-                    className="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 cursor-pointer"
-                    title="Expand details"
-                  >
+                  <span className="absolute right-4 top-4 hidden h-8 w-8 sm:right-6 sm:top-6 sm:flex items-center justify-center rounded-full bg-black/60 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
                     <Maximize2 className="h-3.5 w-3.5" />
-                  </button>
+                  </span>
                 </div>
 
-                {/* Card Info */}
-                <div
-                  className="flex flex-1 flex-col p-4 sm:p-5 cursor-pointer"
-                  onClick={() => setSelectedAward(award)}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <p className={`font-mono text-xs font-semibold uppercase tracking-wider ${colors.text}`}>
-                      {award.badge}
-                    </p>
-                    <span className="text-[11px] text-subtle">{award.category}</span>
-                  </div>
-                  <h3 className="mt-1.5 font-heading text-base font-semibold leading-snug tracking-tight text-foreground sm:text-lg">
+                <div className="flex flex-1 flex-col p-3.5 sm:p-5">
+                  <p className={`text-xs font-medium ${badgeColorClass}`}>
+                    {award.badge}
+                  </p>
+                  <h3 className="mt-1.5 text-sm font-semibold leading-snug text-foreground sm:mt-2 sm:text-[15px]">
                     {award.title}
                   </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-muted line-clamp-2">
-                    {award.description}
+                  <p className="mt-auto hidden pt-4 text-sm text-muted sm:block">
+                    {award.organization}
                   </p>
-                  <p className="mt-auto pt-3 text-[11px] font-mono text-subtle border-t border-border-subtle flex items-center justify-between">
-                    <span>{award.date}</span>
-                    <span className="text-accent group-hover:underline">Inspect credential &rarr;</span>
+                  <p className="mt-auto pt-2 text-xs text-subtle sm:mt-0.5 sm:pt-0">
+                    {award.date}
                   </p>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
 
+        {/* Show all / Show less button */}
+        {filteredAwards.length > 6 && (
+          <div className="mt-8 text-center">
+            <button
+              type="button"
+              onClick={() => setShowAll((prev) => !prev)}
+              className="btn-secondary cursor-pointer"
+            >
+              <span>{showAll ? 'Show less' : `Show all ${filteredAwards.length}`}</span>
+              {showAll ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </button>
+          </div>
+        )}
+
         {/* Professional Certifications List */}
         <div className="mt-16 sm:mt-20">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
-            <div>
-              <h3 className="font-heading text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                Professional certifications &amp; verifications
-              </h3>
-              <p className="mt-1 text-sm text-muted">
-                Industry-recognized credentials verified through Cisco, Google, IBM, AWS &amp; Microsoft
-              </p>
-            </div>
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <h3 className="font-heading text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+              Professional certifications
+            </h3>
+            <p className="text-sm text-muted">
+              Verifiable via Coursera, IBM, Google &amp; AWS
+            </p>
           </div>
 
           <ul className="divide-y divide-border border-y border-border">
@@ -242,21 +210,21 @@ export const AwardsSection: React.FC = () => {
                   href={cert.verifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-4 py-4 transition-colors hover:bg-surface-2/60 px-2 rounded-lg"
+                  className="group flex items-center gap-4 py-4 transition-colors hover:bg-surface-2/40 px-2 rounded-lg"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-accent shadow-sm group-hover:border-accent">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background">
                     <CheckCircle2 className="h-5 w-5 text-accent" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[15px] font-semibold text-foreground transition-colors group-hover:text-accent">
+                    <span className="block text-[15px] font-medium text-foreground transition-colors group-hover:text-accent">
                       {cert.name}
                     </span>
-                    <span className="block text-xs text-muted font-mono">
-                      {cert.organization} &bull; Verified ID Credential
+                    <span className="block text-sm text-muted">
+                      {cert.organization}
                     </span>
                   </span>
-                  <span className="inline-flex items-center gap-1 text-xs font-medium text-muted transition-colors group-hover:text-foreground">
-                    <span className="hidden sm:inline">Verify Credential</span>
+                  <span className="inline-flex items-center gap-1 text-sm text-muted transition-colors group-hover:text-foreground">
+                    <span className="hidden sm:inline">Verify</span>
                     <ArrowUpRight className="h-4 w-4" />
                   </span>
                 </a>
@@ -279,7 +247,7 @@ export const AwardsSection: React.FC = () => {
             <button
               type="button"
               onClick={() => setSelectedAward(null)}
-              className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+              className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-colors hover:bg-surface-2 hover:text-foreground cursor-pointer"
               aria-label="Close modal"
             >
               <X className="h-4 w-4" />
@@ -301,63 +269,36 @@ export const AwardsSection: React.FC = () => {
               {selectedAward.title}
             </h3>
 
-            {/* Certificate Preview in Modal */}
-            <div className="mt-4 relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-surface-2 shadow-inner">
+            <div className="mt-4 aspect-[16/11] w-full overflow-hidden rounded-xl border border-border bg-surface-2">
               <EditableImage
                 storageKey={`award_cert_${selectedAward.id}`}
                 alt={selectedAward.title}
                 className="h-full w-full"
-                uploadPrompt="Upload Certificate Image"
-                objectFit="contain"
+                imgClassName="h-full w-full object-contain p-2"
+                uploadPrompt="Upload Certificate"
                 fallbackContent={
-                  <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10 text-accent mb-3 shadow-sm">
-                      {getAwardIcon(selectedAward)}
-                    </div>
-                    <p className="font-heading text-sm font-semibold text-foreground">
-                      {selectedAward.organization}
+                  <div className="h-full w-full flex flex-col items-center justify-center p-6 text-center">
+                    {getAwardIcon(selectedAward)}
+                    <p className="mt-3 font-heading font-semibold text-foreground">
+                      {selectedAward.title}
                     </p>
-                    <p className="font-mono text-xs text-muted mt-1">
-                      Official Certificate &bull; {selectedAward.date}
+                    <p className="mt-1 text-xs text-muted">
+                      {selectedAward.organization} &bull; {selectedAward.date}
                     </p>
                   </div>
                 }
               />
             </div>
 
-            <div className="mt-4 rounded-2xl border border-border bg-surface-2 p-4 font-mono text-xs text-muted space-y-2">
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-subtle">Date / Session:</span>
-                <span className="font-semibold text-foreground">{selectedAward.date}</span>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-subtle">Issuing Institution:</span>
-                <span className="font-semibold text-foreground">{selectedAward.organization}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-subtle">Status:</span>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">Authenticated &bull; Dean Approved</span>
-              </div>
-            </div>
-
             <p className="mt-4 text-sm leading-relaxed text-muted">
               {selectedAward.description}
             </p>
 
-            {selectedAward.verificationDetails && (
-              <p className="mt-3 text-xs text-subtle italic">
-                Note: {selectedAward.verificationDetails}
-              </p>
-            )}
-
-            <div className="mt-6 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setSelectedAward(null)}
-                className="btn-secondary px-5"
-              >
-                Close View
-              </button>
+            <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-xs text-subtle">
+              <span>Date: {selectedAward.date}</span>
+              <span className="font-mono uppercase text-accent font-semibold">
+                Verified Credential
+              </span>
             </div>
           </div>
         </div>

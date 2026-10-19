@@ -147,8 +147,7 @@ export const ProjectsSection: React.FC = () => {
               Case studies with measurable outcomes
             </h2>
             <p className="lead mt-3 sm:mt-4">
-              Each project addresses a critical security or automation bottleneck, followed by rigorous architecture,
-              testing, and measurable real-world outcomes.
+              Each project starts with a business bottleneck and ends with a number. Here's the problem, what I shipped, and what changed.
             </p>
           </div>
         </div>

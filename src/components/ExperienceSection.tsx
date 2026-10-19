@@ -21,11 +21,10 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
           <div className="max-w-2xl">
             <p className="eyebrow">Experience</p>
             <h2 className="h-section mt-3 sm:mt-4">
-              Where I've built &amp; defended
+              Where I've shipped
             </h2>
             <p className="lead mt-3 sm:mt-4">
-              Hands-on engineering roles and initiatives where I owned secure software design, firmware reliability,
-              and stakeholder delivery.
+              Product roles where I owned discovery, requirements and rollout, and was accountable for the outcome.
             </p>
           </div>
           <div className="shrink-0">
@@ -78,7 +77,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
                     {item.isCurrent && (
                       <span className="mt-4 inline-flex items-center gap-2 text-xs font-medium text-muted">
                         <span className="status-dot" />
-                        Current engagement
+                        Current role
                       </span>
                     )}
                   </div>
