@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowUpRight, Award, GraduationCap, Camera } from 'lucide-react';
 import { EditableImage } from './EditableImage';
+import { useAdmin } from '../context/AdminContext';
 
 export const EducationSection: React.FC = () => {
+  const { isAdmin } = useAdmin();
   const coursework = [
     'Machine Learning',
     'Natural Language Processing',
@@ -54,10 +56,17 @@ export const EducationSection: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="mt-4 flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold text-accent shadow-card">
-                    <Camera className="h-3.5 w-3.5" />
-                    <span>Upload graduation picture</span>
-                  </div>
+                  {isAdmin ? (
+                    <div className="mt-4 flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold text-accent shadow-card">
+                      <Camera className="h-3.5 w-3.5" />
+                      <span>Upload graduation picture</span>
+                    </div>
+                  ) : (
+                    <div className="mt-4 flex items-center gap-1.5 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold text-teal shadow-card">
+                      <Award className="h-3.5 w-3.5" />
+                      <span>Dean's List Awardee &bull; Class of 2026</span>
+                    </div>
+                  )}
                 </div>
               }
             />

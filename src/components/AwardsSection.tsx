@@ -10,17 +10,47 @@ import {
   X,
   ChevronDown,
   ChevronUp,
+  Plus,
 } from 'lucide-react';
 import { AWARDS, CERTIFICATIONS } from '../data/portfolioData';
 import { Award } from '../types/portfolio';
 import { EditableImage } from './EditableImage';
+import { useAdmin } from '../context/AdminContext';
+import { CreateAwardModal } from './CreateAwardModal';
 
 export const AwardsSection: React.FC = () => {
+  const { isAdmin } = useAdmin();
   const [activeTab, setActiveTab] = useState<'all' | 'academic' | 'leadership' | 'programmes'>('all');
   const [selectedAward, setSelectedAward] = useState<Award | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const filteredAwards = AWARDS.filter((award) => {
+  const [awards, setAwards] = useState<Award[]>(() => {
+    try {
+      const saved = localStorage.getItem('portfolio_awards');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return AWARDS;
+  });
+
+  const handleDeleteAward = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm('Delete this award card? / هل ترغب في حذف هذا الكارد؟')) {
+      const updated = awards.filter((a) => a.id !== id);
+      setAwards(updated);
+      localStorage.setItem('portfolio_awards', JSON.stringify(updated));
+    }
+  };
+
+  const handleCreateAward = (newAward: Award) => {
+    const updated = [newAward, ...awards];
+    setAwards(updated);
+    localStorage.setItem('portfolio_awards', JSON.stringify(updated));
+  };
+
+  const filteredAwards = awards.filter((award) => {
     if (activeTab === 'all') return true;
     return award.category === activeTab;
   });
@@ -69,6 +99,18 @@ export const AwardsSection: React.FC = () => {
               Academic awards, competition results and leadership recognition. Every certificate is shown in full, so you can check it.
             </p>
           </div>
+          {isAdmin && (
+            <div className="shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsCreateModalOpen(true)}
+                className="btn-gradient inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold cursor-pointer shadow-md"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Create New Award</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Filter Tabs */}
@@ -82,7 +124,7 @@ export const AwardsSection: React.FC = () => {
               className={`tab cursor-pointer ${activeTab === 'all' ? 'tab-active' : ''}`}
             >
               All
-              <span className="text-xs text-subtle">{AWARDS.length}</span>
+              <span className="text-xs text-subtle">{awards.length}</span>
             </button>
             <button
               type="button"
@@ -93,7 +135,7 @@ export const AwardsSection: React.FC = () => {
             >
               Academic
               <span className="text-xs text-subtle">
-                {AWARDS.filter((a) => a.category === 'academic').length}
+                {awards.filter((a) => a.category === 'academic').length}
               </span>
             </button>
             <button
@@ -105,7 +147,7 @@ export const AwardsSection: React.FC = () => {
             >
               Leadership
               <span className="text-xs text-subtle">
-                {AWARDS.filter((a) => a.category === 'leadership').length}
+                {awards.filter((a) => a.category === 'leadership').length}
               </span>
             </button>
             <button
@@ -117,7 +159,7 @@ export const AwardsSection: React.FC = () => {
             >
               Programmes
               <span className="text-xs text-subtle">
-                {AWARDS.filter((a) => a.category === 'programmes').length}
+                {awards.filter((a) => a.category === 'programmes').length}
               </span>
             </button>
           </div>
@@ -132,9 +174,21 @@ export const AwardsSection: React.FC = () => {
                 type="button"
                 key={award.id}
                 onClick={() => setSelectedAward(award)}
-                className="card-interactive group flex flex-col overflow-hidden text-left cursor-pointer"
+                className="card-interactive group relative flex flex-col overflow-hidden text-left cursor-pointer"
               >
                 <div className="relative w-full bg-surface-2 p-2.5 sm:p-4">
+                  {/* Admin Delete 'X' Button */}
+                  {isAdmin && (
+                    <span
+                      onClick={(e) => handleDeleteAward(award.id, e)}
+                      className="absolute top-2 right-2 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-rose-600 text-white shadow-md transition-transform hover:scale-110 cursor-pointer"
+                      title="Delete award card"
+                      role="button"
+                      aria-label="Delete award"
+                    >
+                      <X className="h-4 w-4" />
+                    </span>
+                  )}
                   <div className="relative aspect-[16/11] w-full overflow-hidden rounded-lg bg-white shadow-card">
                     <EditableImage
                       storageKey={`award_cert_${award.id}`}
@@ -303,6 +357,13 @@ export const AwardsSection: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Admin: Create Award Modal */}
+      <CreateAwardModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreate={handleCreateAward}
+      />
     </section>
   );
 };

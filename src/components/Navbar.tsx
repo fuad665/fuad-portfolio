@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, Sun, Moon } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Sun, Moon, Lock, ShieldCheck } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { useAdmin } from '../context/AdminContext';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -10,6 +11,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode, onOpenContact, onOpenResume }) => {
+  const { isAdmin, openLoginModal, logout } = useAdmin();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -87,6 +89,28 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode, onOpenCon
 
           {/* Right Action Buttons */}
           <div className="flex items-center gap-2">
+            {/* Owner Admin Button */}
+            <button
+              type="button"
+              onClick={isAdmin ? logout : openLoginModal}
+              title={isAdmin ? 'Admin Mode Active — Click to Logout' : 'Admin Login (Passcode: fuad2026)'}
+              aria-label={isAdmin ? 'Admin Mode Active' : 'Admin Login'}
+              className={`flex h-9 items-center justify-center rounded-full border transition-all cursor-pointer ${
+                isAdmin
+                  ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-3 gap-1.5'
+                  : 'w-9 border-border bg-surface text-muted hover:text-foreground hover:scale-105'
+              }`}
+            >
+              {isAdmin ? (
+                <>
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline text-xs font-semibold">Admin</span>
+                </>
+              ) : (
+                <Lock className="h-3.5 w-3.5" />
+              )}
+            </button>
+
             {/* Theme Toggle Button */}
             <button
               type="button"
@@ -156,7 +180,32 @@ export const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode, onOpenCon
             Resume
           </button>
 
-          <div className="mt-2 pt-3 border-t border-border flex items-center justify-between">
+          <div className="mt-2 pt-3 border-t border-border flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (isAdmin) {
+                  logout();
+                } else {
+                  openLoginModal();
+                }
+              }}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2.5 text-xs font-semibold text-muted hover:text-foreground cursor-pointer"
+            >
+              {isAdmin ? (
+                <>
+                  <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                  <span>Exit Admin Mode</span>
+                </>
+              ) : (
+                <>
+                  <Lock className="h-4 w-4" />
+                  <span>Admin Login (fuad2026)</span>
+                </>
+              )}
+            </button>
+
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, '#contact')}

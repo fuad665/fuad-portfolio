@@ -1,9 +1,9 @@
-import React from 'react';
-import { ArrowRight, ArrowUpRight, Award, Trophy, Medal, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, ArrowUpRight, Award, Trophy, Medal, Star, X } from 'lucide-react';
 import { EditableImage } from './EditableImage';
+import { useAdmin } from '../context/AdminContext';
 
-export const HighlightsSection: React.FC = () => {
-  const highlights = [
+const DEFAULT_HIGHLIGHTS = [
     {
       id: 'deans-list-sem3',
       storageKey: 'award_cert_deans-list-sem3',
@@ -122,6 +122,28 @@ export const HighlightsSection: React.FC = () => {
     },
   ];
 
+export const HighlightsSection: React.FC = () => {
+  const { isAdmin } = useAdmin();
+  const [highlights, setHighlights] = useState(() => {
+    try {
+      const saved = localStorage.getItem('portfolio_highlights');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return DEFAULT_HIGHLIGHTS;
+  });
+
+  const handleDelete = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (confirm('Delete this highlight card? / هل ترغب في حذف هذا الكارد؟')) {
+      const updated = highlights.filter((h: any) => h.id !== id);
+      setHighlights(updated);
+      localStorage.setItem('portfolio_highlights', JSON.stringify(updated));
+    }
+  };
+
   return (
     <section id="highlights" aria-labelledby="highlights-title" className="scroll-mt-20 border-y border-border bg-background">
       <div className="container-page py-14 sm:py-20">
@@ -140,8 +162,21 @@ export const HighlightsSection: React.FC = () => {
 
         {/* 4 Cards Grid */}
         <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:gap-5">
-          {highlights.map((item) => (
-            <li key={item.id}>
+          {highlights.map((item: any) => (
+            <li key={item.id} className="relative group">
+              {/* Admin Delete 'X' Button */}
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={(e) => handleDelete(item.id, e)}
+                  title="Delete highlight card"
+                  aria-label="Delete highlight card"
+                  className="absolute top-2 right-2 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-rose-500/10 text-rose-600 hover:bg-rose-500 hover:text-white transition-all shadow-sm cursor-pointer border border-rose-300 dark:border-rose-800"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+
               <a
                 href="#certifications"
                 className="card-interactive group relative flex h-full flex-col overflow-hidden"

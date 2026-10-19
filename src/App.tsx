@@ -12,8 +12,11 @@ import { NewsSection } from './components/NewsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
+import { AdminProvider } from './context/AdminContext';
+import { AdminBar } from './components/AdminBar';
+import { AdminLoginModal } from './components/AdminLoginModal';
 
-export function App() {
+function AppContent() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     const saved = localStorage.getItem('theme');
     if (saved) {
@@ -52,6 +55,9 @@ export function App() {
         onOpenContact={handleOpenContact}
         onOpenResume={() => setResumeModalOpen(true)}
       />
+
+      {/* Floating Admin Status Bar for Owner */}
+      <AdminBar />
 
       {/* Main Content Sections matching exact reference architecture */}
       <main className="relative min-h-screen overflow-x-hidden pt-16">
@@ -94,7 +100,18 @@ export function App() {
         isOpen={resumeModalOpen}
         onClose={() => setResumeModalOpen(false)}
       />
+
+      {/* Owner Admin Passcode Dialog */}
+      <AdminLoginModal />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <AdminProvider>
+      <AppContent />
+    </AdminProvider>
   );
 }
 

@@ -12,12 +12,14 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { EditableImage } from './EditableImage';
+import { useAdmin } from '../context/AdminContext';
 
 interface HeroProps {
   onOpenResume: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
+  const { isAdmin } = useAdmin();
   const [klTime, setKlTime] = useState<string>('');
 
   useEffect(() => {
@@ -234,10 +236,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
                         </p>
                       </div>
 
-                      <div className="mt-4 flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold text-accent shadow-card">
-                        <Camera className="h-3.5 w-3.5" />
-                        <span>Click to upload your portrait</span>
-                      </div>
+                      {isAdmin ? (
+                        <div className="mt-4 flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold text-accent shadow-card">
+                          <Camera className="h-3.5 w-3.5" />
+                          <span>Click to upload your portrait</span>
+                        </div>
+                      ) : (
+                        <div className="mt-4 flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-medium text-muted shadow-card">
+                          <span className="status-dot" />
+                          <span>Kuala Lumpur, Malaysia</span>
+                        </div>
+                      )}
                     </div>
                   }
                 />

@@ -17,13 +17,43 @@ import {
   ScanLine,
   FileText,
   BarChart3,
+  Plus,
 } from 'lucide-react';
 import { FEATURED_PROJECTS } from '../data/portfolioData';
 import { Project } from '../types/portfolio';
 import { EditableImage } from './EditableImage';
+import { useAdmin } from '../context/AdminContext';
+import { CreateProjectModal } from './CreateProjectModal';
 
 export const ProjectsSection: React.FC = () => {
+  const { isAdmin } = useAdmin();
   const [activeModalProject, setActiveModalProject] = useState<Project | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const [projects, setProjects] = useState<Project[]>(() => {
+    try {
+      const saved = localStorage.getItem('portfolio_projects');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return FEATURED_PROJECTS;
+  });
+
+  const handleDeleteProject = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm('Delete this project card? / هل ترغب في حذف هذا المشروع؟')) {
+      const updated = projects.filter((p) => p.id !== id);
+      setProjects(updated);
+      localStorage.setItem('portfolio_projects', JSON.stringify(updated));
+    }
+  };
+
+  const handleCreateProject = (newProject: Project) => {
+    const updated = [newProject, ...projects];
+    setProjects(updated);
+    localStorage.setItem('portfolio_projects', JSON.stringify(updated));
+  };
 
   const getCategoryTheme = (color: Project['categoryColor']) => {
     switch (color) {
@@ -150,18 +180,42 @@ export const ProjectsSection: React.FC = () => {
               Each project starts with a business bottleneck and ends with a number. Here's the problem, what I shipped, and what changed.
             </p>
           </div>
+          {isAdmin && (
+            <div className="shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsCreateModalOpen(true)}
+                className="btn-gradient inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold cursor-pointer shadow-md"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Create New Project</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Major Case Studies List */}
         <div className="space-y-8">
-          {/* Featured Project 1: Secure Voting System */}
-          {FEATURED_PROJECTS.slice(0, 2).map((project) => {
+          {/* Featured Projects Split Cards */}
+          {projects.slice(0, 2).map((project) => {
             const theme = getCategoryTheme(project.categoryColor);
             return (
               <article
                 key={project.id}
                 className={`card-interactive group relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 ${theme.borderHover}`}
               >
+                {/* Admin Delete 'X' Button */}
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={(e) => handleDeleteProject(project.id, e)}
+                    className="absolute top-3 right-3 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-rose-600 text-white shadow-md transition-transform hover:scale-110 cursor-pointer"
+                    title="Delete project card"
+                    aria-label="Delete project"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
                 {/* Visual Area (7 cols on desktop) */}
                 <div
                   className="relative block overflow-hidden bg-surface-2 aspect-[16/10] lg:col-span-7 lg:aspect-auto lg:min-h-[420px]"
@@ -253,13 +307,25 @@ export const ProjectsSection: React.FC = () => {
 
           {/* 2-Column Grid for Secondary Projects */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {FEATURED_PROJECTS.slice(2).map((project) => {
+            {projects.slice(2).map((project) => {
               const theme = getCategoryTheme(project.categoryColor);
               return (
                 <article
                   key={project.id}
                   className={`card-interactive group relative overflow-hidden flex flex-col ${theme.borderHover}`}
                 >
+                  {/* Admin Delete 'X' Button */}
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      onClick={(e) => handleDeleteProject(project.id, e)}
+                      className="absolute top-3 right-3 z-30 flex h-7 w-7 items-center justify-center rounded-full bg-rose-600 text-white shadow-md transition-transform hover:scale-110 cursor-pointer"
+                      title="Delete project card"
+                      aria-label="Delete project"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
                   <div className="relative aspect-[16/10] overflow-hidden bg-surface-2">
                     <EditableImage
                       storageKey={`project_${project.id}`}
@@ -473,6 +539,12 @@ export const ProjectsSection: React.FC = () => {
           </div>
         </div>
       )}
+      {/* Admin Create Project Modal */}
+      <CreateProjectModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreate={handleCreateProject}
+      />
     </section>
   );
 };

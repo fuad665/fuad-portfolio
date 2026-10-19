@@ -1,13 +1,43 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowUpRight, Download, ChevronDown, ChevronUp, Plus, X, Briefcase } from 'lucide-react';
 import { EXPERIENCE_ITEMS } from '../data/portfolioData';
+import { Experience } from '../types/portfolio';
+import { useAdmin } from '../context/AdminContext';
+import { CreateExperienceModal } from './CreateExperienceModal';
 
 interface ExperienceSectionProps {
   onOpenResume: () => void;
 }
 
 export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResume }) => {
+  const { isAdmin } = useAdmin();
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const [experiences, setExperiences] = useState<Experience[]>(() => {
+    try {
+      const saved = localStorage.getItem('portfolio_experience');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return EXPERIENCE_ITEMS;
+  });
+
+  const handleDeleteExperience = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm('Delete this role card? / هل ترغب في حذف هذا الكارد؟')) {
+      const updated = experiences.filter((item) => item.id !== id);
+      setExperiences(updated);
+      localStorage.setItem('portfolio_experience', JSON.stringify(updated));
+    }
+  };
+
+  const handleCreateExperience = (newExp: Experience) => {
+    const updated = [newExp, ...experiences];
+    setExperiences(updated);
+    localStorage.setItem('portfolio_experience', JSON.stringify(updated));
+  };
 
   const toggleExpand = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -27,7 +57,17 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
               Product roles where I owned discovery, requirements and rollout, and was accountable for the outcome.
             </p>
           </div>
-          <div className="shrink-0">
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => setIsCreateModalOpen(true)}
+                className="btn-gradient inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold cursor-pointer shadow-md"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Create New Role</span>
+              </button>
+            )}
             <button
               type="button"
               onClick={onOpenResume}
@@ -41,7 +81,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
 
         {/* Experience Timeline */}
         <ol className="divide-y divide-border border-y border-border">
-          {EXPERIENCE_ITEMS.map((item) => {
+          {experiences.map((item) => {
             const isExpanded = expandedId === item.id;
             const visibleResponsibilities = isExpanded
               ? item.responsibilities
@@ -51,8 +91,21 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
             return (
               <li
                 key={item.id}
-                className="grid grid-cols-1 gap-6 py-10 md:grid-cols-12 md:gap-10 sm:py-12"
+                className="relative grid grid-cols-1 gap-6 py-10 md:grid-cols-12 md:gap-10 sm:py-12 group"
               >
+                {/* Admin Delete 'X' Button */}
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={(e) => handleDeleteExperience(item.id, e)}
+                    title="Delete role card"
+                    aria-label="Delete role card"
+                    className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-rose-500/10 text-rose-600 hover:bg-rose-500 hover:text-white transition-all shadow-sm cursor-pointer border border-rose-300 dark:border-rose-800"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+
                 {/* Left Column: Organization & Meta */}
                 <div className="md:col-span-4">
                   <div className="md:sticky md:top-24">
@@ -85,7 +138,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
 
                 {/* Right Column: Role Details & Achievements */}
                 <div className="md:col-span-8">
-                  <h3 className="font-heading text-2xl font-semibold tracking-tight text-foreground">
+                  <h3 className="font-heading text-2xl font-semibold tracking-tight text-foreground pr-8">
                     {item.role}
                   </h3>
                   <p className="mt-2 text-[15px] leading-relaxed text-muted">
@@ -134,6 +187,13 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onOpenResu
           })}
         </ol>
       </div>
+
+      {/* Admin: Create Experience Modal */}
+      <CreateExperienceModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreate={handleCreateExperience}
+      />
     </section>
   );
 };

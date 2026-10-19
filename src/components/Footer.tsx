@@ -1,12 +1,14 @@
 import React from 'react';
-import { Linkedin, Mail, Github } from 'lucide-react';
+import { Linkedin, Mail, Github, Lock, ShieldCheck } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { useAdmin } from '../context/AdminContext';
 
 interface FooterProps {
   onOpenResume: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenResume }) => {
+  const { isAdmin, openLoginModal } = useAdmin();
   const currentYear = new Date().getFullYear();
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -138,9 +140,29 @@ export const Footer: React.FC<FooterProps> = ({ onOpenResume }) => {
       </div>
 
       {/* Copyright Bar */}
-      <div className="container-page flex flex-col gap-2 border-t border-border-subtle py-6 text-xs text-subtle sm:flex-row sm:justify-between">
+      <div className="container-page flex flex-col gap-2 border-t border-border-subtle py-6 text-xs text-subtle sm:flex-row sm:items-center sm:justify-between">
         <p>&copy; {currentYear} {PERSONAL_INFO.name}. All rights reserved.</p>
-        <p>Built with React, Tailwind CSS &amp; Lucide Icons</p>
+        <div className="flex items-center gap-3">
+          <span>Built with React, Tailwind CSS &amp; Lucide Icons</span>
+          <span>&bull;</span>
+          <button
+            type="button"
+            onClick={openLoginModal}
+            className="inline-flex items-center gap-1 hover:text-accent transition-colors cursor-pointer"
+          >
+            {isAdmin ? (
+              <>
+                <ShieldCheck className="h-3 w-3 text-emerald-500" />
+                <span className="text-emerald-500 font-medium">Owner Mode Active</span>
+              </>
+            ) : (
+              <>
+                <Lock className="h-3 w-3" />
+                <span>Owner Admin</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </footer>
   );
