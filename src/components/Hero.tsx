@@ -53,27 +53,25 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
               <div className="inline-flex min-w-0 items-center gap-2.5 rounded-full border border-border bg-white py-1.5 pl-3 pr-4 text-sm text-gray-700 shadow-card">
                 <span className="status-dot shrink-0" />
                 <span className="truncate">
-                  Open to Cybersecurity &amp; Tech roles
-                  <span className="hidden sm:inline"> · Remote or relocation</span>
+                  {PERSONAL_INFO.statusText}
                 </span>
               </div>
             </div>
 
             {/* Main Headline */}
             <h1 className="h-display mt-6 sm:mt-7 text-gray-950">
-              I build secure, resilient architectures and automated systems that{' '}
-              <span className="text-gradient">protect and scale.</span>
+              I turn enterprise workflows into AI products that{' '}
+              <span className="text-gradient">pay for themselves.</span>
             </h1>
 
             {/* Sub-bio */}
             <p className="lead mt-5 max-w-xl sm:mt-6 text-gray-600">
-              I'm <strong className="font-semibold text-gray-950">{PERSONAL_INFO.name}</strong>, a{' '}
-              <strong className="font-semibold text-gray-950">Computer Science (Cybersecurity)</strong> graduate
-              from Albukhary International University. I design zero-trust authenticated voting infrastructures,
-              scalable enterprise automation pipelines, and robust IoT telemetry systems.
+              I'm <strong className="font-semibold text-gray-950">{PERSONAL_INFO.shortName}</strong>,{' '}
+              <strong className="font-semibold text-gray-950">Product Manager at MindHive</strong> in Kuala Lumpur.
+              I take AI from discovery and PRDs to production rollout, backed by a Computer Science (Data Science) degree from Albukhary International University.
             </p>
 
-            {/* Highlight Badges / Recognition Pills matching the screenshot */}
+            {/* Highlight Badges / Recognition Pills */}
             <a
               href="#highlights"
               className="group mt-6 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm"
@@ -90,13 +88,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
                 <span className="flex h-5 w-5 items-center justify-center rounded-full text-rose-600 bg-rose-100/70">
                   <Medal className="h-3 w-3" />
                 </span>
-                1st Place · Distinction
+                1st Place · Public Speaking
               </span>
               <span className="chip gap-1.5 py-1 pl-1 font-medium text-gray-800 transition-transform group-hover:-translate-y-0.5">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full text-purple-600 bg-purple-100/70">
                   <ShieldCheck className="h-3 w-3" />
                 </span>
-                Security Specialist
+                IBM-certified AI PM
               </span>
               <span className="chip gap-1.5 py-1 pl-1 font-medium text-gray-800 transition-transform group-hover:-translate-y-0.5">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full text-amber-600 bg-amber-100/70">
@@ -217,10 +215,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResume }) => {
                           {PERSONAL_INFO.name}
                         </h3>
                         <p className="text-xs text-gray-600 font-medium">
-                          B.CompSc in Cybersecurity
+                          Product Manager &bull; MindHive
                         </p>
                         <p className="text-[11px] text-gray-400 font-mono">
-                          Albukhary International University
+                          B.CompSc in Data Science &bull; AIU
                         </p>
                       </div>
 

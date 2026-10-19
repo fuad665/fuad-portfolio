@@ -25,7 +25,7 @@ export interface Award {
   title: string;
   badge: string;
   organization: string;
-  category: 'academic' | 'security' | 'leadership';
+  category: 'academic' | 'leadership' | 'programmes' | 'security';
   color: 'accent' | 'rose' | 'amber' | 'violet' | 'teal';
   date: string;
   description: string;
@@ -37,7 +37,7 @@ export interface Certification {
   name: string;
   organization: string;
   verifyUrl: string;
-  badgeType: 'coursera' | 'ibm' | 'google' | 'aws' | 'cisco' | 'generic';
+  badgeType: 'coursera' | 'ibm' | 'google' | 'aws' | 'cisco' | 'microsoft' | 'generic';
 }
 
 export interface Experience {

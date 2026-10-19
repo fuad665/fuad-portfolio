@@ -12,6 +12,11 @@ import {
   Lock,
   Workflow,
   Cpu,
+  Bot,
+  Sparkles,
+  ScanLine,
+  FileText,
+  BarChart3,
 } from 'lucide-react';
 import { FEATURED_PROJECTS } from '../data/portfolioData';
 import { Project } from '../types/portfolio';
@@ -55,73 +60,76 @@ export const ProjectsSection: React.FC = () => {
 
   const renderProjectVisual = (project: Project) => {
     switch (project.id) {
-      case 'secure-voting-system':
+      case 'maia-enterprise-ai':
         return (
           <div className="relative h-full w-full flex flex-col items-center justify-center p-8 bg-gradient-to-br from-surface-2 via-surface to-accent/5">
             <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl border border-accent/20 bg-surface shadow-md">
-              <Lock className="h-12 w-12 text-accent" />
+              <Bot className="h-12 w-12 text-accent" />
             </div>
             <div className="mt-4 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                SHA-256 Authenticated Chain
+                Multi-Model Router Active
               </span>
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-2 text-center w-full max-w-xs font-mono text-[11px]">
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center w-full max-w-sm font-mono text-[11px]">
               <div className="rounded-lg border border-border bg-surface p-2 text-muted">
-                Zero-Tamper Ledger
+                GPT-4o
               </div>
               <div className="rounded-lg border border-border bg-surface p-2 text-muted">
-                Blind Single-Use Token
+                DeepSeek
+              </div>
+              <div className="rounded-lg border border-border bg-surface p-2 text-muted">
+                Gemini
               </div>
             </div>
           </div>
         );
-      case 'employer-management-system':
+      case 'pelangi-voucher-ocr':
         return (
           <div className="relative h-full w-full flex flex-col items-center justify-center p-8 bg-gradient-to-br from-surface-2 via-surface to-violet/5">
             <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl border border-violet/20 bg-surface shadow-md">
-              <Workflow className="h-12 w-12 text-violet" />
+              <ScanLine className="h-12 w-12 text-violet" />
             </div>
             <div className="mt-4 flex items-center gap-2">
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-violet">
-                Granular RBAC Matrix
+                LLM OCR Validation Engine
               </span>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2 text-center w-full max-w-xs font-mono text-[11px]">
               <div className="rounded-lg border border-border bg-surface p-2 text-muted">
-                Admin &bull; HR &bull; Staff
+                90% Auto Triage
               </div>
               <div className="rounded-lg border border-border bg-surface p-2 text-muted">
-                Automated Payroll Run
+                Fraud Detection
               </div>
             </div>
           </div>
         );
-      case 'iot-smart-watering-system':
+      case 'aiu-smart-resume-analyzer':
         return (
           <div className="relative aspect-[16/10] w-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-surface-2 via-surface to-teal/5">
-            <Cpu className="h-12 w-12 text-teal" />
+            <FileText className="h-12 w-12 text-teal" />
             <div className="mt-3 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-teal animate-ping" />
               <span className="font-mono text-xs font-semibold text-teal uppercase tracking-wider">
-                Telemetry Active
+                spaCy NLP Pipeline
               </span>
             </div>
             <span className="mt-1 font-mono text-[11px] text-muted">
-              Soil Moisture &amp; pH Sensors
+              7 Skill Categories &bull; 75% Faster
             </span>
           </div>
         );
       default:
         return (
           <div className="relative aspect-[16/10] w-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-surface-2 via-surface to-amber/5">
-            <Shield className="h-12 w-12 text-amber" />
+            <BarChart3 className="h-12 w-12 text-amber" />
             <span className="mt-3 font-mono text-xs font-semibold text-amber uppercase tracking-wider">
-              CIS Benchmark Compliance
+              Ensemble Default Prediction
             </span>
             <span className="mt-1 font-mono text-[11px] text-muted">
-              Automated Port &amp; TLS Auditing
+              Top 50% Globally &bull; 1,024 Competitors
             </span>
           </div>
         );

@@ -17,7 +17,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenResume }) => {
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-gray-200 bg-surface-2 lg:sticky lg:top-24 shadow-sm group">
               <EditableImage
                 storageKey="about_presenting"
-                alt="Fuad presenting system security architecture"
+                alt="Fuad presenting a product demo to stakeholders"
                 className="absolute inset-0 h-full w-full"
                 uploadPrompt="Upload Presentation Photo"
                 fallbackContent={
@@ -34,24 +34,24 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenResume }) => {
 
                       <div className="mt-6 space-y-2">
                         <span className="font-mono text-xs font-semibold text-indigo-600 uppercase tracking-widest">
-                          Security Engineering
+                          AI Product Leadership
                         </span>
                         <h3 className="font-heading text-xl font-bold text-gray-900">
-                          Zero-Trust by Design
+                          Discovery to Rollout
                         </h3>
                         <p className="max-w-xs text-xs leading-relaxed text-gray-500">
-                          Defending sensitive data flow across authenticated balloting, enterprise payrolls, and embedded telemetry.
+                          Translating enterprise bottlenecks into validated multi-model GenAI products that move business metrics.
                         </p>
                       </div>
 
                       <div className="mt-5 flex flex-wrap justify-center gap-2">
                         <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-2.5 py-1 text-[11px] font-medium text-gray-700 shadow-sm">
                           <KeyRound className="h-3 w-3 text-purple-600" />
-                          Cryptographic Tokens
+                          Multi-Model Routing
                         </span>
                         <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-2.5 py-1 text-[11px] font-medium text-gray-700 shadow-sm">
                           <Server className="h-3 w-3 text-teal-600" />
-                          Role-Based Access
+                          Agentic Workflows
                         </span>
                       </div>
                     </div>
@@ -62,10 +62,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenResume }) => {
               {/* Bottom Caption Overlay */}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-5 pt-16">
                 <p className="text-sm font-medium text-white">
-                  Architecting secure systems &amp; presenting to university leadership
+                  Presenting a product demo to stakeholders
                 </p>
                 <p className="text-xs text-white/70">
-                  Albukhary International University
+                  MindHive &bull; Kuala Lumpur
                 </p>
               </div>
             </div>
@@ -75,25 +75,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenResume }) => {
           <div className="lg:col-span-7">
             <p className="eyebrow">About</p>
             <h2 className="h-section mt-4">
-              Security-first engineer with an automation toolkit.
+              Business-first product manager with an engineer's toolkit.
             </h2>
 
             <div className="mt-6 space-y-4 text-[16px] sm:text-[17px] leading-relaxed text-muted">
               <p>
-                I earned my Bachelor of Computer Science in Cybersecurity at{' '}
-                <strong className="font-semibold text-foreground">Albukhary International University</strong>,
-                graduating on the Dean's List and receiving the Gold Medal of Academic Distinction.
+                I studied Computer Science (Data Science) at{' '}
+                <strong className="font-semibold text-foreground">Albukhary International University</strong> and
+                made the Dean's List. Then I moved into product, because I cared more about <em>why</em> a model should
+                exist than about tuning it.
               </p>
               <p>
-                Throughout my academic and project engineering journey, I recognized that security is not an
-                afterthought or a checklist—it is foundational architecture. Whether implementing blind cryptographic
-                ballots for student elections, architecting strict RBAC for HR systems, or building low-latency IoT
-                irrigation monitors, my objective is consistent: eliminate vulnerabilities while maximizing operational
-                efficiency.
-              </p>
-              <p>
-                I thrive at the intersection of defense-in-depth principles, modern web frameworks, and automated
-                infrastructure. If a system requires manual, repetitive intervention, it can be secured and automated.
+                At MindHive I own AI products end to end: discovery with enterprise stakeholders, PRDs, model selection,
+                evaluation and rollout. My bar is simple. If it doesn't move a business metric, it isn't done.
               </p>
             </div>
 

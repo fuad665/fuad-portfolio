@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Calculator, ChevronDown, ChevronUp, ShieldCheck, Zap, DollarSign, Clock } from 'lucide-react';
+import { Calculator, ChevronDown, ChevronUp, Bot, Zap, DollarSign, Clock } from 'lucide-react';
 
 export const SecuritySimulator: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [systemsCount, setSystemsCount] = useState(25);
-  const [weeklyAuditHours, setWeeklyAuditHours] = useState(15);
-  const [hourlyRate, setHourlyRate] = useState(60);
+  const [monthlyVolume, setMonthlyVolume] = useState(3000);
+  const [reviewMinutes, setReviewMinutes] = useState(12);
+  const [hourlyRate, setHourlyRate] = useState(35);
 
-  // Calculations:
-  // Automation cuts ~65% of repetitive audit & access management overhead
-  const annualHoursSaved = Math.round(weeklyAuditHours * 52 * 0.65);
+  // Unit Economics Model:
+  // Automation cuts 65% of review time and triages 90% of submissions automatically
+  const manualHoursPerMonth = (monthlyVolume * reviewMinutes) / 60;
+  const hoursSavedPerMonth = Math.round(manualHoursPerMonth * 0.65);
+  const annualHoursSaved = hoursSavedPerMonth * 12;
   const annualCostSaved = annualHoursSaved * hourlyRate;
-  const vulnerabilityTriageSpeedup = (1 + (systemsCount / 15)).toFixed(1);
+  const speedupFactor = '3×';
 
   return (
     <div className="container-page pb-14 sm:pb-20">
@@ -29,10 +31,10 @@ export const SecuritySimulator: React.FC = () => {
             </span>
             <span>
               <span className="block text-[15px] font-semibold text-foreground">
-                Try the Security &amp; Automation ROI Simulator
+                Try the unit-economics simulator
               </span>
               <span className="block text-sm text-muted">
-                The quantitative model I use to calculate breach risk mitigation and hours saved through secure automation.
+                The cost model I use to make the case for AI automation.
               </span>
             </span>
           </span>
@@ -47,49 +49,51 @@ export const SecuritySimulator: React.FC = () => {
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
               {/* Sliders Input Panel */}
               <div className="space-y-6 lg:col-span-7">
-                {/* Slider 1: Managed Systems */}
+                {/* Slider 1: Monthly Tasks */}
                 <div>
                   <div className="flex justify-between text-sm">
-                    <label htmlFor="systems-slider" className="font-medium text-foreground">
-                      Managed Systems &amp; Services
+                    <label htmlFor="volume-slider" className="font-medium text-foreground">
+                      Monthly Document &amp; Task Volume
                     </label>
-                    <span className="font-mono font-semibold text-accent">{systemsCount} nodes</span>
+                    <span className="font-mono font-semibold text-accent">
+                      {monthlyVolume.toLocaleString()} submissions
+                    </span>
                   </div>
                   <input
-                    id="systems-slider"
+                    id="volume-slider"
                     type="range"
-                    min="5"
-                    max="100"
-                    step="5"
-                    value={systemsCount}
-                    onChange={(e) => setSystemsCount(Number(e.target.value))}
+                    min="500"
+                    max="15000"
+                    step="500"
+                    value={monthlyVolume}
+                    onChange={(e) => setMonthlyVolume(Number(e.target.value))}
                     className="mt-3 w-full"
                   />
                   <p className="mt-1 text-xs text-subtle">
-                    Servers, database instances, and internal microservices requiring compliance access.
+                    Receipts, invoices, student applications, or transaction tickets reviewed per month.
                   </p>
                 </div>
 
-                {/* Slider 2: Weekly Audit Hours */}
+                {/* Slider 2: Minutes per Task */}
                 <div>
                   <div className="flex justify-between text-sm">
-                    <label htmlFor="hours-slider" className="font-medium text-foreground">
-                      Manual Security &amp; Access Admin (Hours / Week)
+                    <label htmlFor="mins-slider" className="font-medium text-foreground">
+                      Manual Review Duration per Item
                     </label>
-                    <span className="font-mono font-semibold text-violet">{weeklyAuditHours} hrs/wk</span>
+                    <span className="font-mono font-semibold text-violet">{reviewMinutes} mins</span>
                   </div>
                   <input
-                    id="hours-slider"
+                    id="mins-slider"
                     type="range"
-                    min="5"
-                    max="40"
+                    min="3"
+                    max="30"
                     step="1"
-                    value={weeklyAuditHours}
-                    onChange={(e) => setWeeklyAuditHours(Number(e.target.value))}
+                    value={reviewMinutes}
+                    onChange={(e) => setReviewMinutes(Number(e.target.value))}
                     className="mt-3 w-full"
                   />
                   <p className="mt-1 text-xs text-subtle">
-                    Time spent on manual permission triage, log review, and patch verification.
+                    Average manual handling, OCR correction, data validation, and approval time.
                   </p>
                 </div>
 
@@ -97,22 +101,22 @@ export const SecuritySimulator: React.FC = () => {
                 <div>
                   <div className="flex justify-between text-sm">
                     <label htmlFor="rate-slider" className="font-medium text-foreground">
-                      Average Engineer / Admin Cost
+                      Analyst / Operator Blended Hourly Rate
                     </label>
                     <span className="font-mono font-semibold text-teal">${hourlyRate} / hr</span>
                   </div>
                   <input
                     id="rate-slider"
                     type="range"
-                    min="25"
-                    max="150"
+                    min="15"
+                    max="100"
                     step="5"
                     value={hourlyRate}
                     onChange={(e) => setHourlyRate(Number(e.target.value))}
                     className="mt-3 w-full"
                   />
                   <p className="mt-1 text-xs text-subtle">
-                    Blended engineering resource cost for operational tasks.
+                    Loaded operational cost per operator hour.
                   </p>
                 </div>
               </div>
@@ -122,7 +126,7 @@ export const SecuritySimulator: React.FC = () => {
                 <div className="h-full rounded-2xl border border-border bg-surface-2 p-5 sm:p-6 flex flex-col justify-between">
                   <div>
                     <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-                      Estimated Annual Impact
+                      Estimated Annual ROI &amp; OpEx Impact
                     </span>
 
                     <div className="mt-4 space-y-4">
@@ -130,7 +134,7 @@ export const SecuritySimulator: React.FC = () => {
                       <div className="flex items-center justify-between border-b border-border pb-3">
                         <div className="flex items-center gap-2">
                           <Clock className="h-4 w-4 text-accent" />
-                          <span className="text-sm font-medium text-muted">Dev &amp; Ops Hours Saved</span>
+                          <span className="text-sm font-medium text-muted">Annual Hours Saved</span>
                         </div>
                         <span className="font-heading text-lg font-bold text-foreground font-mono">
                           {annualHoursSaved.toLocaleString()} hrs
@@ -148,33 +152,33 @@ export const SecuritySimulator: React.FC = () => {
                         </span>
                       </div>
 
-                      {/* Stat 3: Triage Speed */}
+                      {/* Stat 3: Review Cost Cut */}
                       <div className="flex items-center justify-between border-b border-border pb-3">
                         <div className="flex items-center gap-2">
-                          <Zap className="h-4 w-4 text-amber" />
-                          <span className="text-sm font-medium text-muted">Vulnerability Triage</span>
+                          <Zap className="h-4 w-4 text-amber-500" />
+                          <span className="text-sm font-medium text-muted">Review Cost Reduction</span>
                         </div>
-                        <span className="font-heading text-lg font-bold text-amber font-mono">
-                          {vulnerabilityTriageSpeedup}× Faster
+                        <span className="font-heading text-lg font-bold text-amber-600 dark:text-amber-400 font-mono">
+                          60–70% Cut
                         </span>
                       </div>
 
-                      {/* Stat 4: Security Posture */}
+                      {/* Stat 4: Speedup */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <ShieldCheck className="h-4 w-4 text-violet" />
-                          <span className="text-sm font-medium text-muted">Automated Audit Trails</span>
+                          <Bot className="h-4 w-4 text-violet" />
+                          <span className="text-sm font-medium text-muted">Throughput Velocity</span>
                         </div>
                         <span className="font-heading text-lg font-bold text-violet font-mono">
-                          100% Immutable
+                          {speedupFactor} Faster
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <p className="mt-6 text-[11px] text-subtle leading-relaxed border-t border-border pt-4">
-                    Based on benchmark data from automated RBAC policy enforcement and CI/CD security scanning.
-                  </p>
+                  <div className="mt-6 pt-4 border-t border-border text-[11px] font-mono text-subtle">
+                    Model: Multi-tier LLM routing + agentic automated triage &bull; 90% auto-resolution
+                  </div>
                 </div>
               </div>
             </div>

@@ -16,7 +16,7 @@ import { Award } from '../types/portfolio';
 import { EditableImage } from './EditableImage';
 
 export const AwardsSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'all' | 'academic' | 'security' | 'leadership'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'academic' | 'leadership' | 'programmes'>('all');
   const [selectedAward, setSelectedAward] = useState<Award | null>(null);
 
   const filteredAwards = AWARDS.filter((award) => {
@@ -28,12 +28,12 @@ export const AwardsSection: React.FC = () => {
     switch (award.category) {
       case 'academic':
         return <GraduationCap className="h-6 w-6 text-accent" />;
-      case 'security':
-        return <ShieldAlert className="h-6 w-6 text-rose" />;
       case 'leadership':
-        return <Users className="h-6 w-6 text-violet" />;
+        return <Users className="h-6 w-6 text-rose" />;
+      case 'programmes':
+        return <Medal className="h-6 w-6 text-violet" />;
       default:
-        return <Medal className="h-6 w-6 text-amber" />;
+        return <AwardIcon className="h-6 w-6 text-amber" />;
     }
   };
 
@@ -114,17 +114,9 @@ export const AwardsSection: React.FC = () => {
               className={`tab ${activeTab === 'academic' ? 'tab-active' : ''}`}
             >
               Academic
-              <span className="text-xs text-subtle ml-1">(3)</span>
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === 'security'}
-              onClick={() => setActiveTab('security')}
-              className={`tab ${activeTab === 'security' ? 'tab-active' : ''}`}
-            >
-              Security &amp; Tech
-              <span className="text-xs text-subtle ml-1">(2)</span>
+              <span className="text-xs text-subtle ml-1">
+                ({AWARDS.filter((a) => a.category === 'academic').length})
+              </span>
             </button>
             <button
               type="button"
@@ -134,7 +126,21 @@ export const AwardsSection: React.FC = () => {
               className={`tab ${activeTab === 'leadership' ? 'tab-active' : ''}`}
             >
               Leadership
-              <span className="text-xs text-subtle ml-1">(1)</span>
+              <span className="text-xs text-subtle ml-1">
+                ({AWARDS.filter((a) => a.category === 'leadership').length})
+              </span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'programmes'}
+              onClick={() => setActiveTab('programmes')}
+              className={`tab ${activeTab === 'programmes' ? 'tab-active' : ''}`}
+            >
+              Programmes
+              <span className="text-xs text-subtle ml-1">
+                ({AWARDS.filter((a) => a.category === 'programmes').length})
+              </span>
             </button>
           </div>
         </div>

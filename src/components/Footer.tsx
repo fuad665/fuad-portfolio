@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenResume }) => {
             {PERSONAL_INFO.name}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-muted">
-            Cybersecurity Engineer &amp; Secure Systems Architect, based in Kuala Lumpur, Malaysia.
+            AI Product Manager &amp; Technical Project Lead, based in Kuala Lumpur, Malaysia.
           </p>
 
           {/* Social Icons */}

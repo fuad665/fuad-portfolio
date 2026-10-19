@@ -82,13 +82,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResume }) 
               <h2 className="mt-6 font-heading text-4xl font-semibold leading-[1.08] tracking-[-0.035em] sm:text-5xl lg:text-6xl text-white">
                 Let's talk about your next{' '}
                 <span className="bg-gradient-to-r from-[#8FA8FF] via-[#C4B5FD] to-[#FDA4AF] bg-clip-text text-transparent">
-                  secure architecture.
+                  AI product.
                 </span>
               </h2>
 
               <p className="mt-5 max-w-lg text-base sm:text-lg leading-relaxed text-white/75">
-                Looking for a Cybersecurity Engineer, Secure Systems Architect, or Automation Specialist?
-                Pick whichever channel suits you. I typically reply within 24 hours.
+                Hiring an AI Product Manager or Technical Project Lead? Pick whichever channel suits you. I reply within 24 hours.
               </p>
             </div>
 
